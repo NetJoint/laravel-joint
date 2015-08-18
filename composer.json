@@ -1,5 +1,5 @@
 {
-  "name": "laravel-joint/support",
+  "name": "laravel-joint",
   "description": "Support Component of Laravel Joint",
   "license": "MIT",
   "authors": [
@@ -14,10 +14,10 @@
   },
   "autoload": {
     "psr-4": {
-      "LaravelJoint\\Support\\": ""
+      "LaravelJoint\\": ""
     },
     "files": [
-      "helpers.php"
+      "/Support/helpers.php"
     ]
   },
   "minimum-stability": "dev"
