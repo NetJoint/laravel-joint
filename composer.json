@@ -1,6 +1,6 @@
 {
-  "name": "laravel-joint",
-  "description": "Support Component of Laravel Joint",
+  "name": "netjoint/laravel-joint",
+  "description": "Laravel Component of NetJoint",
   "license": "MIT",
   "authors": [
     {
