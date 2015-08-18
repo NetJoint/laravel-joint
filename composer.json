@@ -19,6 +19,5 @@
     "files": [
       "/Support/helpers.php"
     ]
-  },
-  "minimum-stability": "dev"
+  }
 }
