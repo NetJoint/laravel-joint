@@ -1,5 +1,19 @@
 <?php
 
+if (!function_exists('sitename')) {
+
+    /**
+     * return site name;
+     *
+     * @return string
+     */
+    function sitename()
+    {
+        return env('SITE_NAME', 'please set SITE_NAME in .env');
+    }
+
+}
+
 if (!function_exists('cdn')) {
 
     /**
