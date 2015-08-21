@@ -9,7 +9,7 @@ if (!function_exists('sitename')) {
      */
     function sitename()
     {
-        return env('SITE_NAME', 'please set SITE_NAME in .env');
+        return config('app.site_name');
     }
 
 }
