@@ -34,6 +34,42 @@ if (!function_exists('cdn')) {
 
 }
 
+if (!function_exists('domain_url')) {
+
+    /**
+     * return url with domain
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function domain_url($path = '')
+    {
+        $domain = config('app.domain');        
+        return 'http://'.$domain . '/' . ltrim($path, '/');
+    }
+
+}
+
+if (!function_exists('subdomain_url')) {
+
+    /**
+     * return url with subdomain
+     *
+     * @param $prefix
+     * @param $path
+     *
+     * @return string
+     */
+    function subdomain_url($prefix, $path = '')
+    {
+        $domain = config('app.domain');
+        $subdomain = $prefix.'.'.$domain;
+        return 'http://'.$subdomain . '/' . ltrim($path, '/');
+    }
+
+}
+
 if (!function_exists('email_website')) {
 
     /**
