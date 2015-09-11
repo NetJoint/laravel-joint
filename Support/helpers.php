@@ -111,3 +111,37 @@ if (!function_exists('email_website')) {
     }
 
 }
+
+if (!function_exists('numeric_random')) {
+
+    /**
+     * Generate a "random" numeric string.
+     *
+     * @param  int  $length
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    function numeric_random($length = 6)
+    {
+        $string = '';
+
+        while (($len = strlen($string)) < $length) {
+            $size = $length - $len;
+
+            if (function_exists('openssl_random_pseudo_bytes')) {
+                $bytes = openssl_random_pseudo_bytes($length, $strong);
+
+                if ($bytes === false || $strong === false) {
+                    throw new RuntimeException('Unable to generate random string.');
+                }
+            } else {
+                throw new RuntimeException('OpenSSL extension is required for PHP 5 users.');
+            }
+            $string .= substr(preg_replace('/[a-fA-F]/', '', bin2hex($bytes)), 0, $size);
+        }
+
+        return $string;
+    }
+
+}
