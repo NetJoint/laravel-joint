@@ -45,8 +45,8 @@ if (!function_exists('domain_url')) {
      */
     function domain_url($path = '')
     {
-        $domain = config('app.domain');        
-        return 'http://'.$domain . '/' . ltrim($path, '/');
+        $domain = config('app.domain');
+        return 'http://' . $domain . '/' . ltrim($path, '/');
     }
 
 }
@@ -64,8 +64,8 @@ if (!function_exists('subdomain_url')) {
     function subdomain_url($prefix, $path = '')
     {
         $domain = config('app.domain');
-        $subdomain = $prefix.'.'.$domain;
-        return 'http://'.$subdomain . '/' . ltrim($path, '/');
+        $subdomain = $prefix . '.' . $domain;
+        return 'http://' . $subdomain . '/' . ltrim($path, '/');
     }
 
 }
@@ -94,20 +94,20 @@ if (!function_exists('email_website')) {
             'eyou.com' => 'http://www.eyou.com/',
             '188.com' => 'http://www.188.com/'
         );
-        
+
         $email = explode('@', $email);
-        if(!is_array($email) || !isset($email[1])){
+        if (!is_array($email) || !isset($email[1])) {
             return '#';
-        }else{
+        } else {
             $host = $email[1];
         }
         if (in_array($host, $hostlist)) {
             return $hostlist[$host];
         }
-        if(substr($host,0,5)!=='mail.'){
-            $host = 'mail.'.$host;
+        if (substr($host, 0, 5) !== 'mail.') {
+            $host = 'mail.' . $host;
         }
-        return 'http://'.$host;
+        return 'http://' . $host;
     }
 
 }
@@ -142,6 +142,60 @@ if (!function_exists('numeric_random')) {
         }
 
         return $string;
+    }
+
+}
+
+if (!function_exists('utf8_substr')) {
+
+    function utf8_substr($str, $width = 0, $end = '...')
+    {
+        if ($width <= 0 || $width >= strlen($str)) {
+            return $str;
+        }
+        $arr = str_split($str);
+        $len = count($arr);
+        $w = 0;
+        $width *= 10;
+
+        // 不同字节编码字符宽度系数，根据字体调整  
+        $x1 = 11;   // ASCII  
+        $x2 = 16;
+        $x3 = 21;
+        $x4 = $x3;
+
+        for ($i = 0; $i < $len; $i++) {
+            if ($w >= $width) {
+                $e = $end;
+                break;
+            }
+            $c = ord($arr[$i]);
+            if ($c <= 127) {
+                $w += $x1;
+            } elseif ($c >= 192 && $c <= 223) { // 2字节头  
+                $w += $x2;
+                $i += 1;
+            } elseif ($c >= 224 && $c <= 239) { // 3字节头  
+                $w += $x3;
+                $i += 2;
+            } elseif ($c >= 240 && $c <= 247) { // 4字节头  
+                $w += $x4;
+                $i += 3;
+            }
+        }
+        return implode('', array_slice($arr, 0, $i)) . $e;
+    }
+
+}
+
+if (!function_exists('date_cn')) {
+
+    function date_cn($date_str)
+    {
+        $timestamp = strtotime($date_str);
+        $weekday = ['日', '一', '二', '三', '四', '五', '六'];
+        $w = date('w', $timestamp);
+        return date('y-m-d', $timestamp) . '(周' . $weekday[$w] . ')';
     }
 
 }
